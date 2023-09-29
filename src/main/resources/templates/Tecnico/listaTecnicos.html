@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/navbar.html :: header( title = 'Lista Tecnicos')}"></head>
+<body>
+<main>
+    <div class="container px-4 pb-5">
+        <nav th:replace="~{fragmentos/navbar.html :: navbar( active = 'Tecnicos')}"></nav>
+        <h1 class="pb-2 border-bottom">Lista de Tecnicos</h1>
+        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/tecnicos/new'}">Nuevo Tecnico</a>
+        <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+        <form method="post" th:action="@{/tecnicos/buscarTecnico}">
+            <input name="searchField" class="form-control mb-3" type="text" placeholder="Search"/>
+        </form>
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>Tecnico</th>
+                <th>Dni</th>
+                <th>Phone</th>
+                <th>Edad</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="tecnico, info : ${listaTecnicos}">
+                <td th:text="${info.index + 1}"></td>
+                <td th:text="${tecnico.firstName} + ' ' + ${tecnico.lastName}"></td>
+                <td th:text="${tecnico.dni}"></td>
+                <td th:text="${tecnico.phone}"></td>
+                <td th:text="${tecnico.age}"></td>
+                <td><a class="btn btn-primary"
+                       th:href="@{'/tecnicos/edit' + '?id=' + ${tecnico.technicianId}}">Editar</a>
+                </td>
+                <td><a class="btn btn-danger"
+                       th:href="@{'/tecnicos/delete' + '?id=' + ${tecnico.technicianId}}">Borrar</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</main>
+<script th:replace="~{fragmentos/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>

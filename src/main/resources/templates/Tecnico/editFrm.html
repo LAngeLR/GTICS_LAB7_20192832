@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos/navbar.html :: header( title = 'Formulario')}"></head>
+    <body>
+        <div class="container">
+            <nav th:replace="~{fragmentos/navbar.html :: navbar( active = 'Tecnicos')}"></nav>
+            <div class="row mb-4">
+                <div class="col-md-6 offset-md-3">
+                    <h2 th:text="${tecnico.technicianId==0? 'Nuevo tecnico':'Editar tecnico'}">Editar tecnico</h2>
+                    <hr/>
+                    <div class="alert alert-danger" role="alert" th:if="${msg != null}" th:text="${msg}">
+                        A simple success alert—check it out!
+                    </div>
+                    <form method="post" th:action="@{'/tecnicos/save'}" th:object="${tecnico}">
+                        <input th:field="*{technicianId}" type="hidden"/>
+                        <div class="mb-3">
+                            <label class="form-label">Nombre del tecnico</label>
+                            <input th:field="*{firstName}" type="text" class="form-control"
+                                   th:classappend="${#fields.hasErrors('firstname')?'is-invalid':''}"/>
+                            <div id="validationServer03Feedback" class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstName}">
+                                Mensaje de error de firstName
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Apellido del tecnico</label>
+                            <input th:field="*{lastName}" type="text" class="form-control"
+                                   th:classappend="${#fields.hasErrors('lastname')?'is-invalid':''}"/>
+                            <div id="validationServer04Feedback" class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastName}">
+                                Mensaje de error de lastName
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Dni</label>
+                            <input th:field="*{dni}" type="text" class="form-control"
+                                   th:classappend="${#fields.hasErrors('dni')?'is-invalid':''}"/>
+                            <div id="validationServer05Feedback" class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">
+                                Mensaje de error de dni
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input th:field="*{phone}" type="text" class="form-control"
+                                   th:classappend="${#fields.hasErrors('phone')?'is-invalid':''}"/>
+                            <div id="validationServer06Feedback" class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">
+                                Mensaje de error de phone
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Edad</label>
+                            <input th:field="*{age}" type="number" th:class="${#fields.hasErrors('age')?'form-control is-invalid':'form-control'}"/>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('age')}" th:errors="*{age}">
+                                Mensaje de error de edad
+                            </div>
+                        </div>
+
+                        <a th:href="@{'/tecnicos/listaTecnicos'}" class="btn btn-danger">Cancelar</a>
+                        <button type="submit" class="btn btn-primary"
+                                th:text="${tecnico.technicianId==0? 'Guardar':'Actualizar'}">Actualizar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+    </body>
+</html>
